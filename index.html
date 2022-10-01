@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<style type="text/css">
+		* {
+	margin: 0;
+	padding: 0;
+	font-family: sans-serif;
+	background: #f1c40f;
+
+}
+
+.header-text {
+	color: black;
+	font-size: 25px;
+	text-align: center;
+}
+header {
+	align-items: center;
+}
+
+.cell {
+
+	cursor: pointer;
+	border: 2px solid;
+	width: 75px;
+	line-height: 75px;
+	height: 75px;
+	box-shadow: 0 0 0 3px;
+
+}
+#cuntainer {
+	font-size: 30px;
+	display: grid;
+	grid-template-columns: repeat(3, auto);
+	width: 250px;
+	margin: auto;
+}
+#game {
+	margin-top: 60px;
+	align-content: center;
+	text-align: center;
+}
+
+.btn {
+
+  border: none;
+
+  padding: 16px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+
+  background-color: #f1c40f; 
+  color: black; 
+  border: 2px solid #008CBA;
+}
+
+
+.btn:hover {
+  background-color: #008CBA;
+  color: white;
+}
+	</style>
+	<title>x o</title>
+</head>
+<body>
+	<header>
+		<h2 class="header-text">X & O</h2>
+		<p id="cur-player"></p>
+	</header>
+<div id="game">
+	<div id="cuntainer">
+		<div class="cell" index="0" ></div>
+		<div class="cell" index="1" ></div>
+		<div class="cell" index="2" ></div>
+		<div class="cell" index="3" ></div>
+		<div class="cell" index="4" ></div>
+		<div class="cell" index="5" ></div>
+		<div class="cell" index="6" ></div>
+		<div class="cell" index="7" ></div>
+		<div class="cell" index="8" ></div>
+	</div>
+	<button class="btn" id="butt" onclick="restart()">Restart</button>
+</div>
+
+<script type="text/javascript" >
+	const allCells = document.querySelectorAll(".cell");
+const wins = [
+[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]
+];
+
+let gamePlayOp = ["","","","","","","","",""];
+let player = "X";
+let isPlaying = false;
+
+const paragraph = document.getElementById('cur-player');
+Start() ;
+function Start() {
+	allCells.forEach(cell => cell.addEventListener("click", clicked));
+
+}
+
+function clicked() {
+	const cellindex = this.getAttribute("index")
+	
+	if (gamePlayOp[cellindex]!= "") {
+		alert("NO NO NO");
+		return;
+	}else {
+		
+		this.innerText = player;
+		gamePlayOp[cellindex]=player;
+		winner();
+		changePlayer(player);
+		
+	}
+
+}
+function changePlayer(x){
+	if (x=="X") {
+		player = "O";
+		
+	} else {
+		player="X";
+		
+	}
+}
+
+function winner(){
+	for (var i = 0; i < wins.length; i++) {
+		let a = wins[i][0];
+		let b = wins[i][1];
+		let c = wins[i][2];
+		if(gamePlayOp[a] == gamePlayOp[b] && gamePlayOp[b] == gamePlayOp[c] && gamePlayOp[a] != "" && gamePlayOp[b] != "" && gamePlayOp[c] != "" ){
+			alert(player);
+			player = "X";
+			restart();
+
+		}
+	}
+
+
+	
+}
+
+
+function restart(){
+
+	gamePlayOp = ["","","","","","","","",""];
+	
+
+	allCells.forEach(cell => cell.innerText="");
+	player = "X";
+}
+
+</script>
+</body>
+</html>
